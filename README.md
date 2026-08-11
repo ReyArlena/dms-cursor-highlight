@@ -1,15 +1,15 @@
 # DMS Plugin: Cursor Highlight
 
-DMS daemon plugin that draws a click-through highlight (ring, dot, or arrow) at the
+DMS plugin that draws a click-through highlight (ring, dot, or arrow) at the
 cursor on an overlay layer. Useful for presentations and screen sharing - the highlight
 is a normal Wayland surface, so it is captured by screencopy even when the hardware
-cursor is not.
+cursor is not. Toggle it from a DankBar widget, a keybind, or IPC.
 
 ![Settings panel with the arrow highlight](assets/screenshot.png)
 
 ## Requirements
 
-- [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) (DMS)
+- [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) (DMS) 1.5.0 or newer
 - Hyprland (cursor position is read from Hyprland's IPC socket)
 - `python3` (see [Why the python3 helper?](#why-the-python3-helper))
 
@@ -48,6 +48,23 @@ Either way, finish with: DMS Settings → Plugins → Scan for Plugins → enabl
 
 ## Usage
 
+### Bar widget
+
+![Bar widget with the right-click quick settings menu open](assets/screenshot_widget.png)
+
+Add it in DMS Settings → Appearance → DankBar Layout → *Cursor Highlight*.
+
+Left click the pill to turn highlighting on or off. Its icon is the style you picked -
+ring, dot, or arrow - drawn plain while highlighting is on, and struck through with a
+diagonal line while it is off. The gap around that line is punched out of the icon
+rather than painted, so it shows the bar behind it and stays correct in light and dark
+themes.
+
+Right click the pill for a quick settings menu: switch style, and adjust that style's
+size, ring thickness, offsets, rainbow mode, flash speed, and colour without opening
+the settings panel. Changes apply live. Polling Rate is deliberately left out - it is a
+set-once performance knob rather than something to tweak mid-presentation.
+
 ### Terminal / IPC
 
 ```bash
@@ -56,7 +73,7 @@ dms ipc call cursorHighlight enable
 dms ipc call cursorHighlight disable
 ```
 
-The settings panel also has a Show Highlight toggle that does the same thing.
+The bar widget and the settings panel's Show Highlight toggle do the same thing.
 
 ### Keybinds
 
@@ -93,7 +110,7 @@ DMS Settings → Plugins → Cursor Highlight:
 
 | Setting | Default | Range | Notes |
 |---|---|---|---|
-| Show Highlight | off | - | Live toggle, same as the IPC command |
+| Show Highlight | off | - | Live toggle, same as the bar widget and the IPC command |
 | Polling Rate | 60 Hz | 10-240 | How often the cursor position is sampled; higher is smoother, slightly more CPU |
 | Style | Ring | Ring / Dot / Arrow | Shape drawn at the cursor |
 | Size | 28 px | 8-100 | Radius (ring/dot) or length (arrow) |
@@ -124,14 +141,15 @@ dms restart
 ```
 
 Why: the QML engine caches compiled components by file URL for the lifetime of the
-process, and DMS's plugin reload only cache-busts the daemon component
-(`CursorHighlight.qml`) - the settings panel (`CursorHighlightSettings.qml`) is loaded
-by plain URL and stays cached until the shell restarts. The cache also stores failures:
-if the settings file is missing or broken on first open, the panel silently stays empty
-on every later attempt until a restart, with nothing in the log.
+process, and DMS's plugin reload only cache-busts the manifest's component surfaces
+(`CursorHighlight.qml` and `CursorHighlightWidget.qml`) - the settings panel
+(`CursorHighlightSettings.qml`) is loaded by plain URL and stays cached until the shell
+restarts. The cache also stores failures: if the settings file is missing or broken on
+first open, the panel silently stays empty on every later attempt until a restart, with
+nothing in the log.
 
-`dms ipc call plugins reload cursorHighlight` is enough if only `CursorHighlight.qml`
-changed; when in doubt, `dms restart`.
+`dms ipc call plugins reload cursorHighlight` is enough if only the daemon or widget
+component changed; when in doubt, `dms restart`.
 
 ## Why the python3 helper?
 

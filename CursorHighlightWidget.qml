@@ -77,6 +77,7 @@ PluginComponent {
         property bool struck: false
         property real glyphSize: 20
         readonly property real stroke: Math.max(1.5, glyphSize * 0.1)
+        readonly property real slashStroke: glyphSize * 0.08
 
         width: glyphSize
         height: glyphSize
@@ -88,6 +89,7 @@ PluginComponent {
         onShapeChanged: requestPaint()
         onStruckChanged: requestPaint()
         onStrokeChanged: requestPaint()
+        onSlashStrokeChanged: requestPaint()
         onVisibleChanged: if (visible) requestPaint()
 
         onPaint: {
@@ -131,17 +133,20 @@ PluginComponent {
             if (!struck)
                 return;
 
-            // Bottom-left to top-right
+            // Top-left to bottom-right, with the length and weight of the
+            // slash in Material Symbols' own "_off" glyphs (mic_off,
+            // volume_off) at the weight DMS draws them, so it sits level with
+            // the other struck icons in the bar
             ctx.beginPath();
-            ctx.moveTo(s * 0.03, s * 0.97);
-            ctx.lineTo(s * 0.97, s * 0.03);
+            ctx.moveTo(s * 0.15, s * 0.15);
+            ctx.lineTo(s * 0.85, s * 0.85);
 
             ctx.globalCompositeOperation = "destination-out";
-            ctx.lineWidth = stroke * 2.6;
+            ctx.lineWidth = slashStroke * 3;
             ctx.stroke();
 
             ctx.globalCompositeOperation = "source-over";
-            ctx.lineWidth = stroke;
+            ctx.lineWidth = slashStroke;
             ctx.stroke();
         }
     }

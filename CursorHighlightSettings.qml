@@ -138,6 +138,30 @@ PluginSettings {
                 }
             }
 
+            ToggleSetting {
+                settingKey: "onlyWhileSharing"
+                label: "Show only when screen sharing is active"
+                description: "Hides the bar widget otherwise, unless the highlight is on"
+                defaultValue: false
+            }
+
+            StyledText {
+                text: "Sharing is detected the same way as the privacy indicator, from PipeWire screencast streams. Not picked up? <a href=\"https://github.com/ReyArlena/dms-cursor-highlight/issues\" style=\"color: " + Theme.primary + ";\">Open an issue</a>."
+                textFormat: Text.RichText
+                linkColor: Theme.primary
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.surfaceVariantText
+                wrapMode: Text.WordWrap
+                width: parent.width
+                onLinkActivated: link => Qt.openUrlExternally(link)
+
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                }
+            }
+
             SliderSetting {
                 settingKey: "pollRate"
                 label: "Polling Rate"

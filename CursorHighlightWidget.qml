@@ -15,6 +15,28 @@ PluginComponent {
     readonly property bool highlightActive: daemonInstance ? daemonInstance.active : false
     readonly property string highlightStyle: pluginData.style || "ring"
 
+    // With "only while screen sharing" on, the pill hides unless a share is
+    // live - or the highlight is still on, so it can always be switched off
+    // from the bar. PrivacyService only polls while something holds a Ref.
+    readonly property bool onlyWhileSharing: settingValue("onlyWhileSharing", false)
+    readonly property bool pillShown: !onlyWhileSharing || highlightActive || PrivacyService.screensharingActive
+
+    onPillShownChanged: applyPillVisibility()
+    onOnlyWhileSharingChanged: applyPillVisibility()
+    Component.onCompleted: applyPillVisibility()
+
+    function applyPillVisibility() {
+        if (onlyWhileSharing)
+            setVisibilityOverride(pillShown);
+        else
+            clearVisibilityOverride();
+    }
+
+    Ref {
+        service: PrivacyService
+        active: root.onlyWhileSharing
+    }
+
     readonly property var styleOptions: [
         {
             "value": "ring",

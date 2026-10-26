@@ -65,6 +65,10 @@ size, ring thickness, offsets, rainbow mode, flash speed, and colour without ope
 the settings panel. Changes apply live. Polling Rate is deliberately left out - it is a
 set-once performance knob rather than something to tweak mid-presentation.
 
+Turn on *Show only when screen sharing is active* in the settings panel to keep the
+pill out of the bar until you start sharing your screen. It stays visible while the
+highlight is on, so it can always be switched off from the bar.
+
 ### Terminal / IPC
 
 ```bash
@@ -111,6 +115,7 @@ DMS Settings → Plugins → Cursor Highlight:
 | Setting | Default | Range | Notes |
 |---|---|---|---|
 | Show Highlight | off | - | Live toggle, same as the bar widget and the IPC command |
+| Show only when screen sharing is active | off | - | Hides the bar widget unless a screen share is live or the highlight is on. Sharing is detected like DMS's privacy indicator, from PipeWire screencast streams |
 | Polling Rate | 60 Hz | 10-240 | How often the cursor position is sampled; higher is smoother, slightly more CPU |
 | Style | Ring | Ring / Dot / Arrow | Shape drawn at the cursor |
 | Size | 28 px | 8-100 | Radius (ring/dot) or length (arrow) |

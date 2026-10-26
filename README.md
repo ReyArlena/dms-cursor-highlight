@@ -156,6 +156,18 @@ nothing in the log.
 `dms ipc call plugins reload cursorHighlight` is enough if only the daemon or widget
 component changed; when in doubt, `dms restart`.
 
+### Releasing
+
+Bump `version` in `plugin.json`, commit, then push a matching tag:
+
+```bash
+git tag v1.3.0 && git push origin v1.3.0
+```
+
+`.github/workflows/release.yml` checks the tag matches `plugin.json` (and fails if not),
+then creates the GitHub Release with auto-generated notes. Store users get updates from
+the default branch regardless of releases.
+
 ## Why the python3 helper?
 
 The plugin polls the cursor position from Hyprland's IPC socket - the same request

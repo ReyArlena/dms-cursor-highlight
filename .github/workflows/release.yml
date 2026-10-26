@@ -1,0 +1,37 @@
+# Creates the GitHub Release for a version tag.
+#
+# Cut a release with:
+#   git tag v1.3.0 && git push origin v1.3.0
+# The tag must match "version" in plugin.json, or the run fails before a
+# release is made. Nothing is built or attached: DMS installs plugins by
+# cloning the repo, and `dms plugins update` follows the default branch, so a
+# release is a changelog and version marker rather than what users receive.
+
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches plugin.json version
+        run: |
+          tag_version="${GITHUB_REF_NAME#v}"
+          plugin_version="$(jq -r .version plugin.json)"
+          if [ "$tag_version" != "$plugin_version" ]; then
+            echo "::error file=plugin.json::Tag $GITHUB_REF_NAME does not match plugin.json version $plugin_version - bump plugin.json or retag"
+            exit 1
+          fi
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

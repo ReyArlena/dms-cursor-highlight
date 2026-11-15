@@ -162,7 +162,7 @@ component changed; when in doubt, `dms restart`.
 Bump `version` in `plugin.json`, commit, then push a matching tag:
 
 ```bash
-git tag v1.3.0 && git push origin v1.3.0
+git tag v2.0.0 && git push origin v2.0.0
 ```
 
 `.github/workflows/release.yml` checks the tag matches `plugin.json` (and fails if not),

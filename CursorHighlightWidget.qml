@@ -1,7 +1,7 @@
 import QtQuick
 import qs.Common
 import qs.Services
-import qs.Widgets
+import qs.DCommon.Widgets
 import qs.Modules.Plugins
 
 PluginComponent {
@@ -191,7 +191,7 @@ PluginComponent {
         width: parent.width
         spacing: Theme.spacingXS
 
-        // DankSlider assigns its own value while dragging, which breaks any
+        // DSlider assigns its own value while dragging, which breaks any
         // binding on it. Push the stored value back in whenever it changes, so
         // switching style - which repoints settingKey at a different stored
         // value - still moves the handle.
@@ -203,7 +203,7 @@ PluginComponent {
             color: Theme.surfaceVariantText
         }
 
-        DankSlider {
+        DSlider {
             id: slider
 
             width: parent.width
@@ -293,7 +293,7 @@ PluginComponent {
                             }
                         }
 
-                        DankIcon {
+                        DIcon {
                             anchors.right: parent.right
                             anchors.rightMargin: Theme.spacingM
                             anchors.verticalCenter: parent.verticalCenter
@@ -375,7 +375,7 @@ PluginComponent {
                         color: Theme.surfaceText
                     }
 
-                    DankToggle {
+                    DToggle {
                         id: rainbowToggle
 
                         anchors.right: parent.right

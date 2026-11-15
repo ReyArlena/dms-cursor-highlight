@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import qs.Common
 import qs.Services
-import qs.Widgets
+import qs.DCommon.Widgets
 import qs.Modules.Plugins
 
 PluginSettings {
@@ -51,7 +51,7 @@ PluginSettings {
             selectedTextColor: Theme.surface
         }
 
-        DankActionButton {
+        DActionButton {
             id: copyButton
             anchors.right: parent.right
             anchors.top: parent.top
@@ -127,7 +127,7 @@ PluginSettings {
                     }
                 }
 
-                DankToggle {
+                DToggle {
                     id: highlightToggle
                     anchors.verticalCenter: parent.verticalCenter
                     checked: root.highlightActive
@@ -293,7 +293,7 @@ PluginSettings {
                 defaultValue: Theme.primary
             }
 
-            DankButton {
+            DButton {
                 text: "Reset Color to Theme Default"
                 iconName: "format_color_reset"
                 onClicked: {
@@ -323,7 +323,7 @@ PluginSettings {
             Row {
                 spacing: Theme.spacingM
 
-                DankIcon {
+                DIcon {
                     name: "info"
                     size: Theme.iconSize
                     color: Theme.primary
@@ -401,7 +401,7 @@ PluginSettings {
             Row {
                 spacing: Theme.spacingM
 
-                DankIcon {
+                DIcon {
                     name: "code"
                     size: Theme.iconSize
                     color: Theme.primary

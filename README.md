@@ -9,7 +9,8 @@ cursor is not. Toggle it from a DankBar widget, a keybind, or IPC.
 
 ## Requirements
 
-- [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) (DMS) 1.5.0 or newer
+- [Dux Shell](https://github.com/duxlabs-dev/dux-shell) (DMS, formerly DankMaterialShell) 2.0.0 or newer. Before 2.0, DMS kept plugins in
+  `~/.config/DankMaterialShell/plugins`; update DMS first rather than installing there.
 - Hyprland (cursor position is read from Hyprland's IPC socket)
 - `python3` (see [Why the python3 helper?](#why-the-python3-helper))
 
@@ -24,23 +25,23 @@ Install straight from within DMS - no manual file management, and updates are on
 - **In-app**: DMS Settings → Plugins → Browse, find *Cursor Highlight*, and install.
 - **CLI**: `dms plugins install cursorHighlight`
 
-This clones the plugin into `~/.config/DankMaterialShell/plugins/` and wires it up automatically. Update later with `dms plugins update cursorHighlight`; remove with `dms plugins uninstall cursorHighlight`.
+This clones the plugin into `~/.config/dms/plugins/` and wires it up automatically. Update later with `dms plugins update cursorHighlight`; remove with `dms plugins uninstall cursorHighlight`.
 
 ### Manual (git clone)
 
 Clone directly into the plugins directory - the repo root is the plugin (manifest at the top), so no symlink or subfolder juggling:
 
 ```bash
-git clone https://github.com/ReyArlena/dms-cursor-highlight ~/.config/DankMaterialShell/plugins/cursor-highlight
+git clone https://github.com/ReyArlena/dms-cursor-highlight ~/.config/dms/plugins/cursor-highlight
 ```
 
 Or clone anywhere and symlink it into the plugins directory:
 
 ```bash
-ln -s /path/to/dms-cursor-highlight ~/.config/DankMaterialShell/plugins/cursor-highlight
+ln -s /path/to/dms-cursor-highlight ~/.config/dms/plugins/cursor-highlight
 ```
 
-Update later with `git -C ~/.config/DankMaterialShell/plugins/cursor-highlight pull`.
+Update later with `git -C ~/.config/dms/plugins/cursor-highlight pull`.
 
 ### Enable
 
